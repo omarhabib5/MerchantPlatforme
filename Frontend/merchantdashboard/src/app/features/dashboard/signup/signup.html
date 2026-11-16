@@ -1,0 +1,37 @@
+<div class="signup-shell">
+  <div class="signup-panel">
+    <span class="badge">GET STARTED — CREATE YOUR ACCOUNT</span>
+    <h1>Create your<br />merchant account</h1>
+    <p class="lead">
+      Manage your orders, products, and customer messages in one place.
+    </p>
+
+    <form (ngSubmit)="submit()" class="signup-form">
+      <label>
+        Name
+        <input type="text" [(ngModel)]="name" name="name" placeholder="Your full name" autocomplete="name" />
+      </label>
+
+      <label>
+        Email
+        <input type="email" [(ngModel)]="email" name="email" placeholder="you@example.com" autocomplete="email" />
+      </label>
+
+      <label>
+        Password
+        <input type="password" [(ngModel)]="password" name="password" placeholder="At least 6 characters"
+          autocomplete="new-password" />
+      </label>
+
+      <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+      <button type="submit" class="submit-btn" [disabled]="loading()">
+        {{ loading() ? 'Creating your account…' : 'Create account' }}
+      </button>
+    </form>
+
+    <p class="login-hint">
+      Already have an account? <a routerLink="/login">Sign in</a>
+    </p>
+  </div>
+</div>

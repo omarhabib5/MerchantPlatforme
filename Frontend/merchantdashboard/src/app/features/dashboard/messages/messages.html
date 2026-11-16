@@ -1,0 +1,78 @@
+<div class="messages-page">
+  <header class="messages-header">
+    <div>
+      <h1>Messages</h1>
+      <p class="subtitle">{{ filteredMessages().length }} conversations</p>
+    </div>
+  </header>
+
+  <nav class="filter-tabs" aria-label="Filter messages by platform">
+    <button class="tab" [class.active]="activeFilter() === 'all'" (click)="setFilter('all')" type="button">
+      All
+    </button>
+    <button
+      class="tab"
+      [class.active]="activeFilter() === 'facebook'"
+      (click)="setFilter('facebook')"
+      type="button"
+    >
+      Facebook
+    </button>
+    <button
+      class="tab"
+      [class.active]="activeFilter() === 'instagram'"
+      (click)="setFilter('instagram')"
+      type="button"
+    >
+      Instagram
+    </button>
+  </nav>
+
+  <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+  <div class="loading-state" *ngIf="loading()">Loading messages…</div>
+
+  <div class="empty-state" *ngIf="!loading() && filteredMessages().length === 0">
+    <p>No messages yet.</p>
+    <span>Conversations from Facebook and Instagram will appear here automatically.</span>
+  </div>
+
+  <div class="conversation-list" *ngIf="!loading() && filteredMessages().length > 0">
+    <div class="conversation-card" *ngFor="let message of filteredMessages()">
+      <div class="conversation-header">
+        <span class="platform-badge" [class]="'platform-' + message.platform">
+          {{ message.platform }}
+        </span>
+        <span class="timestamp">{{ message.createdAt | date: 'MMM d, HH:mm' }}</span>
+      </div>
+
+      <p class="customer-text">"{{ message.customerText }}"</p>
+
+      <p class="ai-reply" *ngIf="message.aiReply">
+        <span class="ai-label">AI reply</span>
+        {{ message.aiReply }}
+      </p>
+
+      <div class="order-data" *ngIf="hasOrderData(message)">
+        <span class="order-data-label">Extracted order info</span>
+        <div class="order-data-grid">
+          <span *ngIf="message.extractedOrderData?.product">
+            Product: {{ message.extractedOrderData?.product }}
+          </span>
+          <span *ngIf="message.extractedOrderData?.quantity">
+            Qty: {{ message.extractedOrderData?.quantity }}
+          </span>
+          <span *ngIf="message.extractedOrderData?.address">
+            Address: {{ message.extractedOrderData?.address }}
+          </span>
+          <span *ngIf="message.extractedOrderData?.phone">
+            Phone: {{ message.extractedOrderData?.phone }}
+          </span>
+        </div>
+        <span class="order-status" [class.complete]="message.orderComplete">
+          {{ message.orderComplete ? 'Order created' : 'Incomplete — awaiting more info' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

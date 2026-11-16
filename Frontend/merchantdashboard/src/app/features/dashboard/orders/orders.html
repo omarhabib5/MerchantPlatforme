@@ -1,0 +1,153 @@
+<div class="orders-page">
+  <header class="orders-header">
+    <div>
+      <h1>{{ language.t('orders') }}</h1>
+      <p class="subtitle">{{ filteredOrders().length }} / {{ orders().length }} {{ language.t('orders') }}</p>
+    </div>
+    <div class="header-actions">
+      <label class="import-btn" [class.disabled]="importing()">
+        {{ importing() ? language.t('saving') : language.t('importFile') }}
+        <input type="file" accept=".pdf,.csv,.txt,.tsv,.json,application/pdf,application/json,text/csv"
+          (change)="importFile($event)" [disabled]="importing()" />
+      </label>
+      <button class="primary-btn" type="button" (click)="openAddForm()">+ {{ language.t('newOrder') }}</button>
+    </div>
+  </header>
+
+  <nav class="filter-tabs" [attr.aria-label]="language.t('status')">
+    <button *ngFor="let filter of statusFilters" class="tab" [class.active]="activeFilter() === filter"
+      (click)="setFilter(filter)" type="button">
+      {{ filter | titlecase }}
+    </button>
+  </nav>
+
+  <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+  <div class="loading-state" *ngIf="loading()">{{ language.t('loadingOrders') }}</div>
+
+  <div class="empty-state" *ngIf="!loading() && filteredOrders().length === 0">
+    <p>{{ language.t('noOrders') }}</p>
+    <span>{{ language.t('orderHint') }}</span>
+  </div>
+
+  <div class="table-wrap" *ngIf="!loading() && filteredOrders().length > 0">
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>{{ language.t('customer') }}</th>
+          <th>{{ language.t('product') }}</th>
+          <th>{{ language.t('source') }}</th>
+          <th>{{ language.t('status') }}</th>
+          <th>{{ language.t('orderDate') }}</th>
+          <th class="actions-col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of filteredOrders()">
+          <td>
+            <div class="customer-cell">
+              <span class="customer-name">{{ order.customerName }}</span>
+              <span class="customer-phone">{{ order.customerPhone }}</span>
+            </div>
+          </td>
+          <td>{{ productName(order) }}</td>
+          <td>
+            <span class="source-badge" [class]="'source-' + (order.source || 'manual')">
+              {{ order.source || 'manual' }}
+            </span>
+          </td>
+          <td>
+            <span class="status-badge" [class]="'status-' + order.status">
+              {{ order.status }}
+            </span>
+          </td>
+          <td class="date-cell">{{ order.createdAt | date: 'MMM d, HH:mm' }}</td>
+          <td class="actions-col">
+            <button *ngIf="nextStatus(order.status) as next" class="advance-btn" type="button"
+              (click)="updateStatus(order, next)">
+              {{ language.t('moveTo') }} {{ next }}
+            </button>
+            <button *ngIf="order.status !== 'rejected' && order.status !== 'delivered'" class="reject-btn" type="button"
+              (click)="updateStatus(order, 'rejected')">
+              {{ language.t('reject') }}
+            </button>
+          </td>
+          <td>
+            <div class="table-action-group">
+              <button class="table-action-btn update-btn" type="button" (click)="openUpdateForm(order)">{{
+                language.t('update') }}</button>
+              <button class="table-action-btn delete-btn" type="button" (click)="Deleteorders(order)">{{
+                language.t('delete') }}</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="confirmDeleteOpen()" class="confirm-overlay" (click)="cancelDelete()">
+    <div class="confirm-card" (click)="$event.stopPropagation()">
+      <h3>{{ language.t('deleteOrderQuestion') }}</h3>
+      <p>{{ language.t('deleteOrderHint') }}</p>
+      <div class="confirm-actions">
+        <button type="button" class="cancel-btn" (click)="cancelDelete()">{{ language.t('cancel') }}</button>
+        <button type="button" class="danger-btn" (click)="confirmDeleteOrder()" [disabled]="saving()">
+          {{ saving() ? language.t('saving') : language.t('deleteOrder') }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showForm()" class="form-overlay" (click)="closeForm()">
+    <div class="form-panel" (click)="$event.stopPropagation()">
+      <h2>{{ formModel._id ? language.t('updateOrder') : language.t('newOrder') }}</h2>
+
+      <label>
+        {{ language.t('customerName') }}
+        <input type="text" [(ngModel)]="formModel.customerName" />
+      </label>
+
+      <label>
+        {{ language.t('phone') }}
+        <input type="text" [(ngModel)]="formModel.customerPhone" (ngModelChange)="onPhoneChange($event)"
+          placeholder="مثل: 21 234 567" />
+      </label>
+
+      <label>
+        {{ language.t('address') }}
+        <input type="text" [(ngModel)]="formModel.address" placeholder="مثل: تونس، أريانة" />
+      </label>
+
+      <div class="form-row">
+        <label>
+          {{ language.t('product') }}
+          <select [(ngModel)]="formModel.productId">
+            <option [ngValue]="undefined">— {{ language.t('noProduct') }} —</option>
+            <option *ngFor="let product of products()" [ngValue]="product._id">
+              {{ product.name }}
+            </option>
+          </select>
+        </label>
+        <label>
+          {{ language.t('quantity') }}
+          <input type="number" [(ngModel)]="formModel.quantity" min="1" />
+        </label>
+      </div>
+
+      <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="closeForm()">{{ language.t('cancel') }}</button>
+        <button type="button" class="primary-btn" (click)="formModel._id ? updateorders(formModel) : saveOrder()"
+          [disabled]="saving()">
+          {{ saving() ? language.t('saving') : formModel._id ? language.t('updateOrder') : language.t('createOrder') }}
+        </button>
+
+        <!-- Delete only if editing -->
+        <button *ngIf="formModel._id" type="button" class="danger-btn" (click)="Deleteorders(formModel)">
+          Delete order
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

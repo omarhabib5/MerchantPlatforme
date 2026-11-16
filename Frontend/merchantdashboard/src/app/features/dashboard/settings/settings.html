@@ -1,0 +1,36 @@
+<div class="settings-shell">
+    <div class="settings-panel">
+        <span class="badge">{{ language.t('accountSettings') }}</span>
+        <h1>{{ language.t('changePassword') }}</h1>
+        <p class="lead">{{ language.t('secureAccount') }}</p>
+
+        <form (ngSubmit)="submit()" class="settings-form">
+            <label>
+                {{ language.t('currentPassword') }}
+                <input type="password" [(ngModel)]="currentPassword" name="currentPassword"
+                    [placeholder]="language.t('currentPasswordPlaceholder')" autocomplete="current-password" />
+            </label>
+
+            <label>
+                {{ language.t('newPassword') }}
+                <input type="password" [(ngModel)]="newPassword" name="newPassword"
+                    [placeholder]="language.t('passwordPlaceholder')" autocomplete="new-password" />
+            </label>
+
+            <label>
+                {{ language.t('confirmPassword') }}
+                <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword"
+                    [placeholder]="language.t('repeatPasswordPlaceholder')" autocomplete="new-password" />
+            </label>
+
+            <p class="hint">{{ language.t('passwordHint') }}</p>
+
+            <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+            <p class="success-banner" *ngIf="successMessage()">{{ successMessage() }}</p>
+
+            <button type="submit" class="submit-btn" [disabled]="loading()">
+                {{ loading() ? language.t('updatingPassword') : language.t('updatePassword') }}
+            </button>
+        </form>
+    </div>
+</div>

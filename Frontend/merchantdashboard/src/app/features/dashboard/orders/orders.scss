@@ -1,0 +1,444 @@
+.orders-page {
+  padding: 1.5rem 2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.25rem;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .subtitle {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    color: #6b6b6b;
+  }
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #e5e2db;
+  padding-bottom: 0.75rem;
+
+  .tab {
+    background: none;
+    border: none;
+    font-size: 0.85rem;
+    color: #6b6b6b;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: #f4f1ea;
+    }
+
+    &.active {
+      background: #1a1a1a;
+      color: #fff;
+    }
+  }
+}
+
+.today-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-card {
+  background: #fff;
+  border: 1px solid #e5e2db;
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  .summary-label {
+    font-size: 0.75rem;
+    color: #6b6b6b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  strong {
+    font-size: 1.2rem;
+    color: #1a1a1a;
+  }
+}
+
+.error-banner {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.loading-state,
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b6b6b;
+
+  span {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e5e2db;
+  border-radius: 12px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  thead th {
+    text-align: left;
+    font-weight: 500;
+    color: #6b6b6b;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e2db;
+    background: #faf9f6;
+  }
+
+  tbody td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f0eee7;
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: #faf9f6;
+  }
+}
+
+.customer-cell {
+  display: flex;
+  flex-direction: column;
+
+  .customer-name {
+    font-weight: 500;
+  }
+
+  .customer-phone {
+    font-size: 0.75rem;
+    color: #8a8a8a;
+  }
+}
+
+.date-cell {
+  color: #8a8a8a;
+  white-space: nowrap;
+}
+
+.source-badge,
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.source-facebook {
+  background: #e8f0fe;
+  color: #1a56c4;
+}
+
+.source-instagram {
+  background: #fce8f3;
+  color: #c41a7d;
+}
+
+.source-manual {
+  background: #f0eee7;
+  color: #6b6b6b;
+}
+
+.status-pending {
+  background: #fff4e0;
+  color: #a35a00;
+}
+
+.status-confirmed {
+  background: #e6f4ea;
+  color: #1e7a34;
+}
+
+.status-shipped {
+  background: #e8f0fe;
+  color: #1a56c4;
+}
+
+.status-delivered {
+  background: #e6f4ea;
+  color: #1e7a34;
+}
+
+.status-rejected {
+  background: #fdecea;
+  color: #b3261e;
+}
+
+.actions-col {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.table-action-group {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.table-action-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.update-btn {
+  background: #f4f1ea;
+  color: #1a1a1a;
+}
+
+.delete-btn {
+  background: #fdecea;
+  color: #b3261e;
+}
+
+.advance-btn,
+.reject-btn {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid #e5e2db;
+  background: #fff;
+  cursor: pointer;
+  margin-left: 0.4rem;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: #f4f1ea;
+  }
+}
+
+.reject-btn {
+  color: #b3261e;
+  border-color: #f3d3d0;
+}
+
+// Header "+ New order" button
+.primary-btn {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Delete confirmation modal
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 1rem;
+}
+
+.confirm-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.3rem;
+  width: min(100%, 360px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.16);
+
+  h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.05rem;
+  }
+
+  p {
+    margin: 0 0 1rem;
+    color: #6b6b6b;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+.danger-btn {
+  background: #b3261e;
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// New order form panel
+.form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.form-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+
+  h2 {
+    font-size: 1.1rem;
+    margin: 0 0 0.25rem;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    color: #6b6b6b;
+  }
+
+  input,
+  select {
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid #e5e2db;
+    border-radius: 8px;
+    color: #1a1a1a;
+    background: #fff;
+
+    &:focus {
+      outline: 2px solid #1a1a1a;
+      outline-offset: 1px;
+    }
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.cancel-btn {
+  background: none;
+  border: 1px solid #e5e2db;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:hover {
+    background: #f4f1ea;
+  }
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.import-btn {
+  background: #f4f1ea;
+  color: #1a1a1a;
+  border: 1px solid #e5e2db;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  input {
+    display: none;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

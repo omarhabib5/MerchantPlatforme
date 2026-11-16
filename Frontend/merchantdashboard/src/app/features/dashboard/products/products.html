@@ -1,0 +1,87 @@
+<div class="products-page">
+  <header class="products-header">
+    <div>
+      <h1>{{ language.t('products') }}</h1>
+      <p class="subtitle">{{ products().length }} {{ language.t('productsCount') }}</p>
+    </div>
+    <button class="primary-btn" type="button" (click)="openAddForm()">+ {{ language.t('addProduct') }}</button>
+  </header>
+
+  <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+  <div class="loading-state" *ngIf="loading()">{{ language.t('loadingProducts') }}</div>
+
+  <div class="empty-state" *ngIf="!loading() && products().length === 0">
+    <p>{{ language.t('noProducts') }}</p>
+    <span>{{ language.t('productsHint') }}</span>
+  </div>
+
+  <div class="product-grid" *ngIf="!loading() && products().length > 0">
+    <div class="product-card" *ngFor="let product of products()">
+      <div class="card-top">
+        <img *ngIf="product.imageUrl" [src]="product.imageUrl" [alt]="product.name" class="product-image" />
+        <div *ngIf="!product.imageUrl" class="product-image placeholder">{{ language.t('noImage') }}</div>
+      </div>
+
+      <div class="card-body">
+        <h3>{{ product.name }}</h3>
+        <p class="price">{{ language.t('buying') }}: {{ product.buyingPrice ?? 0 }} DT</p>
+        <p class="price">{{ language.t('selling') }}: {{ product.sellingPrice ?? 0 }} DT</p>
+
+        <span class="stock-badge" [class.low]="product.stockStatus === 'low_stock'"
+          [class.out]="product.stockStatus === 'out_of_stock'">
+          {{ stockLabel(product) }}
+        </span>
+      </div>
+
+      <div class="card-actions">
+        <button type="button" class="edit-btn" (click)="openEditForm(product)">{{ language.t('edit') }}</button>
+        <button type="button" class="delete-btn" (click)="deleteProduct(product)">{{ language.t('delete') }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-overlay" *ngIf="showForm()" (click)="closeForm()">
+    <div class="form-panel" (click)="$event.stopPropagation()">
+      <h2>{{ editingProduct() ? language.t('editProductTitle') : language.t('addProductTitle') }}</h2>
+
+      <label>
+        {{ language.t('name') }}
+        <input type="text" [(ngModel)]="formModel.name" [placeholder]="language.t('name')" />
+      </label>
+
+      <label>
+        {{ language.t('description') }}
+        <textarea [(ngModel)]="formModel.description" rows="2" [placeholder]="language.t('optional')"></textarea>
+      </label>
+
+      <div class="form-row">
+        <label>
+          {{ language.t('buyingPrice') }}
+          <input type="number" [(ngModel)]="formModel.buyingPrice" min="0" />
+        </label>
+        <label>
+          {{ language.t('sellingPrice') }}
+          <input type="number" [(ngModel)]="formModel.sellingPrice" min="0" />
+        </label>
+      </div>
+
+      <label>
+        {{ language.t('stock') }}
+        <input type="number" [(ngModel)]="formModel.stock" min="0" />
+      </label>
+
+      <label>
+        {{ language.t('imageUrl') }}
+        <input type="text" [(ngModel)]="formModel.imageUrl" [placeholder]="language.t('optional')" />
+      </label>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="closeForm()">{{ language.t('cancel') }}</button>
+        <button type="button" class="primary-btn" (click)="saveProduct()" [disabled]="saving()">
+          {{ saving() ? language.t('saving') : language.t('saveProduct') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

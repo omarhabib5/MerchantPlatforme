@@ -1,0 +1,280 @@
+.analytics-page {
+  padding: 1.5rem 2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+.analytics-header {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .subtitle {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    color: #6b6b6b;
+  }
+}
+
+.error-banner {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.loading-state,
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b6b6b;
+
+  span {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+}
+
+.metric-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  border: 1px solid #e5e2db;
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  color: #6b6b6b;
+}
+
+.metric-value {
+  font-size: 1.6rem;
+  font-weight: 600;
+
+  &.warning {
+    color: #b3261e;
+  }
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid #e5e2db;
+  border-radius: 12px;
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+
+  thead th {
+    text-align: left;
+    font-weight: 500;
+    color: #6b6b6b;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e2db;
+    background: #faf9f6;
+  }
+
+  tbody td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f0eee7;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: #faf9f6;
+  }
+}
+
+.warning-text {
+  color: #b3261e;
+  font-weight: 500;
+}
+
+.month-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+
+  button {
+    flex: 0 0 auto;
+    border: 1px solid #d8d4ca;
+    border-radius: 8px;
+    padding: 0.55rem 0.85rem;
+    background: #fff;
+    color: #5f5b54;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.82rem;
+
+    &:hover,
+    &.active {
+      border-color: #3f7f70;
+      background: #3f7f70;
+      color: #fff;
+    }
+  }
+}
+
+.targets-panel,
+.progress-panel {
+  border: 1px solid #e5e2db;
+  border-radius: 12px;
+  padding: 1.25rem;
+  background: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.targets-heading,
+.progress-heading,
+.target-inputs label > div,
+.progress-row > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.targets-heading h2,
+.progress-heading h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.targets-heading p,
+.progress-heading p {
+  margin: 0.3rem 0 0;
+  color: #6b6b6b;
+  font-size: 0.8rem;
+}
+
+.target-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+  margin-top: 1rem;
+
+  label {
+    display: grid;
+    gap: 0.35rem;
+    color: #5f5b54;
+    font-size: 0.8rem;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d8d4ca;
+    border-radius: 7px;
+    padding: 0.6rem;
+    font: inherit;
+  }
+}
+
+.save-targets,
+.ai-button {
+  border: 0;
+  border-radius: 7px;
+  padding: 0.6rem 0.85rem;
+  background: #3f7f70;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}
+
+.progress-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.progress-row {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+
+  strong,
+  small {
+    color: #6b6b6b;
+    font-weight: 500;
+  }
+
+  small {
+    font-size: 0.75rem;
+  }
+}
+
+.progress-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #eeeae1;
+
+  span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #3f7f70;
+    transition: width 250ms ease;
+  }
+}
+
+.ai-advice {
+  margin-top: 1.25rem;
+  padding: 0.9rem 1rem;
+  border-right: 3px solid #3f7f70;
+  background: #f3f8f5;
+
+  p {
+    margin: 0.45rem 0 0;
+    white-space: pre-line;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 700px) {
+  .target-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .targets-heading,
+  .progress-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

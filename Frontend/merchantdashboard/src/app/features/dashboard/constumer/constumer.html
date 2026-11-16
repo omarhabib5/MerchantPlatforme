@@ -1,0 +1,74 @@
+<div class="customers-page">
+  <header class="customers-header">
+    <div>
+      <h1>Customers</h1>
+      <p class="subtitle">{{ customers().length }} customers</p>
+    </div>
+    <label class="search-box">
+      <span class="sr-only">Search customers</span>
+      <span class="search-icon" aria-hidden="true">&#8981;</span>
+      <input type="search" placeholder="Search by name or phone number" [value]="searchTerm()"
+        (input)="updateSearch($any($event.target).value)" />
+    </label>
+  </header>
+
+  <div class="category-summary" *ngIf="customers().length > 0">
+    <span class="summary-pill risk">{{ riskCustomers() }} high-risk customers</span>
+  </div>
+
+  <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+  <div class="loading-state" *ngIf="loading()">Loading customers…</div>
+
+  <div class="empty-state" *ngIf="!loading() && customers().length === 0">
+    <p>No customers yet.</p>
+    <span>Customers are added automatically whenever an order is created.</span>
+  </div>
+
+  <div class="empty-state" *ngIf="!loading() && customers().length > 0 && filteredCustomers().length === 0">
+    <p>No customers found.</p>
+    <span>Try a different name or phone number.</span>
+  </div>
+
+  <div class="table-wrap" *ngIf="!loading() && filteredCustomers().length > 0">
+    <table class="customers-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Orders</th>
+          <th>Delivered</th>
+          <th>Rejection rate</th>
+          <th>Category</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of filteredCustomers()">
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.phone }}</td>
+          <td class="address-cell">{{ customer.address || '—' }}</td>
+          <td>{{ customer.totalOrders }}</td>
+          <td>{{ customer.deliveredOrders }}</td>
+          <td [class.warning-text]="rejectionRate(customer) > 30">
+            {{ rejectionRate(customer) }}%
+          </td>
+          <td>
+            <span class="category-pill" [class.risk]="customerCategory(customer) === 'High rejection risk'"
+              [class.follow-up]="customerCategory(customer) === 'Needs follow-up'"
+              [class.stable]="customerCategory(customer) === 'Stable'">
+              {{ customerCategory(customer) }}
+            </span>
+          </td>
+          <td>
+            <button type="button" class="delete-btn" [disabled]="deletingCustomerId() === customer._id"
+              (click)="deleteCustomer(customer._id)">
+              {{ deletingCustomerId() === customer._id ? 'Deleting...' : 'Delete' }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

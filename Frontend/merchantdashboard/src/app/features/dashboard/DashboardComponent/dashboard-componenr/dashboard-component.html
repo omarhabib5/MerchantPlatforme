@@ -1,0 +1,54 @@
+<div class="dashboard-shell">
+  <aside class="sidebar">
+    <div class="brand-wrap">
+      <div class="brand-mark">T</div>
+      <div class="brand-text">TijaraAI</div>
+    </div>
+
+    <nav class="nav-list" aria-label="Sidebar navigation">
+      <a *ngFor="let item of navItems" [routerLink]="item.path" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon"><i class="ti" [class]="item.icon" aria-hidden="true"></i></span>
+        <span>{{ language.t(item.key) }}</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="merchant-info" *ngIf="authService.currentMerchant() as merchant">
+        <span class="merchant-name">{{ merchant.name }}</span>
+        <span class="merchant-email" *ngIf="merchant.email">{{ merchant.email }}</span>
+      </div>
+      <button type="button" class="logout-btn" (click)="logout()">{{ language.t('logout') }}</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <div class="topbar-copy">
+        <p class="eyebrow">Overview</p>
+        <h1>Business dashboard</h1>
+      </div>
+
+      <div class="topbar-actions">
+        <button type="button" class="ghost-btn">+ New report</button>
+        <div class="language-picker">
+          <label for="language-select">{{ language.t('language') }}</label>
+          <select id="language-select" [value]="language.language()" (change)="setLanguage($any($event.target).value)">
+            <option value="ar">{{ language.t('arabic') }}</option>
+            <option value="fr">{{ language.t('french') }}</option>
+            <option value="en">{{ language.t('english') }}</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-shell">
+
+
+
+    </div>
+
+    <div class="router-content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

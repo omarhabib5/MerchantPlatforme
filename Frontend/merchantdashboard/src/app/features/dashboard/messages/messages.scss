@@ -1,0 +1,169 @@
+.messages-page {
+  padding: 1.5rem 2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+.messages-header {
+  margin-bottom: 1.25rem;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .subtitle {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    color: #6b6b6b;
+  }
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #e5e2db;
+  padding-bottom: 0.75rem;
+
+  .tab {
+    background: none;
+    border: none;
+    font-size: 0.85rem;
+    color: #6b6b6b;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    cursor: pointer;
+
+    &:hover {
+      background: #f4f1ea;
+    }
+
+    &.active {
+      background: #1a1a1a;
+      color: #fff;
+    }
+  }
+}
+
+.error-banner {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.loading-state,
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b6b6b;
+
+  span {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+}
+
+.conversation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 640px;
+}
+
+.conversation-card {
+  border: 1px solid #e5e2db;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  background: #fff;
+}
+
+.conversation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.platform-badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  text-transform: capitalize;
+}
+
+.platform-facebook {
+  background: #e8f0fe;
+  color: #1a56c4;
+}
+.platform-instagram {
+  background: #fce8f3;
+  color: #c41a7d;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: #8a8a8a;
+}
+
+.customer-text {
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
+  color: #1a1a1a;
+}
+
+.ai-reply {
+  font-size: 0.85rem;
+  background: #faf9f6;
+  border-radius: 8px;
+  padding: 0.55rem 0.7rem;
+  margin: 0 0 0.5rem;
+  color: #3a3a3a;
+}
+
+.ai-label {
+  display: block;
+  font-size: 0.7rem;
+  color: #8a8a8a;
+  margin-bottom: 0.15rem;
+}
+
+.order-data {
+  border-top: 1px solid #f0eee7;
+  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.order-data-label {
+  display: block;
+  font-size: 0.7rem;
+  color: #8a8a8a;
+  margin-bottom: 0.35rem;
+}
+
+.order-data-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.order-status {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: #fff4e0;
+  color: #a35a00;
+
+  &.complete {
+    background: #e6f4ea;
+    color: #1e7a34;
+  }
+}

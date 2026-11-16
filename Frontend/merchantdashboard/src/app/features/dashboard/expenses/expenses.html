@@ -1,0 +1,95 @@
+<div class="expenses-page">
+  <header class="expenses-header">
+    <div>
+      <h1>{{ language.t('expenseTitle') }}</h1>
+      <p class="subtitle">{{ language.t('expenseSubtitle') }}</p>
+    </div>
+    <button class="primary-btn" type="button" (click)="openAddForm()">+ {{ language.t('addExpense') }}</button>
+  </header>
+
+  <section class="summary-grid" *ngIf="!loading()">
+    <div class="summary-card">
+      <span>{{ language.t('totalExpenses') }}</span>
+      <strong>{{ totalExpenses() | number:'1.0-2' }} DT</strong>
+    </div>
+    <div class="summary-card" *ngFor="let item of (categoryTotals() | keyvalue)">
+      <span>{{ formatCategory(item.key) }}</span>
+      <strong>{{ item.value | number:'1.0-2' }} DT</strong>
+    </div>
+  </section>
+
+  <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+  <div class="loading-state" *ngIf="loading()">{{ language.t('loadingExpenses') }}</div>
+
+  <div class="empty-state" *ngIf="!loading() && expenses().length === 0">
+    <p>{{ language.t('noExpenses') }}</p>
+    <span>{{ language.t('noExpensesHint') }}</span>
+  </div>
+
+  <div class="expense-list" *ngIf="!loading() && expenses().length > 0">
+    <article class="expense-row" *ngFor="let expense of expenses()">
+      <div class="row-main">
+        <div>
+          <h3>{{ expense.title }}</h3>
+          <p>{{ formatCategory(expense.category) }}</p>
+        </div>
+        <strong>{{ expense.amount | number:'1.0-2' }} DT</strong>
+      </div>
+      <div class="row-meta">
+        <span *ngIf="expense.expenseDate">{{ expense.expenseDate | date:'mediumDate' }}</span>
+        <span *ngIf="expense.notes">{{ expense.notes }}</span>
+      </div>
+      <div class="row-actions">
+        <button type="button" class="edit-btn" (click)="openEditForm(expense)">{{ language.t('edit') }}</button>
+        <button type="button" class="delete-btn" (click)="deleteExpense(expense)">{{ language.t('delete') }}</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="form-overlay" *ngIf="showForm()" (click)="closeForm()">
+    <div class="form-panel" (click)="$event.stopPropagation()">
+      <h2>{{ editingExpense() ? language.t('editExpenseTitle') : language.t('addExpenseTitle') }}</h2>
+
+      <label>
+        {{ language.t('title') }}
+        <input type="text" [(ngModel)]="formModel.title" [placeholder]="language.t('titlePlaceholder')" />
+      </label>
+
+      <div class="form-row">
+        <label>
+          {{ language.t('category') }}
+          <select [(ngModel)]="formModel.category">
+            <option value="publication">{{ language.t('publication') }}</option>
+            <option value="ads">{{ language.t('ads') }}</option>
+            <option value="logistics">{{ language.t('logistics') }}</option>
+            <option value="tools">{{ language.t('tools') }}</option>
+            <option value="other">{{ language.t('other') }}</option>
+          </select>
+        </label>
+
+        <label>
+          {{ language.t('amount') }}
+          <input type="number" [(ngModel)]="formModel.amount" min="0" />
+        </label>
+      </div>
+
+      <label>
+        {{ language.t('date') }}
+        <input type="date" [(ngModel)]="formModel.expenseDate" />
+      </label>
+
+      <label>
+        {{ language.t('notes') }}
+        <textarea [(ngModel)]="formModel.notes" rows="3" [placeholder]="language.t('optionalDetails')"></textarea>
+      </label>
+
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" (click)="closeForm()">{{ language.t('cancel') }}</button>
+        <button type="button" class="primary-btn" (click)="saveExpense()" [disabled]="saving()">
+          {{ saving() ? language.t('saving') : language.t('save') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

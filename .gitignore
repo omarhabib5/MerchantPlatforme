@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build and generated output
+/dist/
+/tmp/
+/out-tsc/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local environment and editor files
+.env
+.env.*
+.idea/
+.history/
+
+# OS files
+.DS_Store
+Thumbs.db

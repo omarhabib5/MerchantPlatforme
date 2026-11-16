@@ -1,0 +1,240 @@
+.products-page {
+  padding: 1.5rem 2rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .subtitle {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    color: #6b6b6b;
+  }
+}
+
+.primary-btn {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.error-banner {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.loading-state,
+.empty-state {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b6b6b;
+
+  span {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.product-card {
+  border: 1px solid #e5e2db;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-top {
+  aspect-ratio: 4 / 3;
+  background: #faf9f6;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  &.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b3b0a8;
+    font-size: 0.8rem;
+  }
+}
+
+.card-body {
+  padding: 0.85rem 1rem 0.5rem;
+  flex: 1;
+
+  h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0 0 0.25rem;
+  }
+
+  .price {
+    font-size: 0.85rem;
+    color: #6b6b6b;
+    margin: 0 0 0.5rem;
+  }
+}
+
+.stock-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: #e6f4ea;
+  color: #1e7a34;
+
+  &.low {
+    background: #fff4e0;
+    color: #a35a00;
+  }
+
+  &.out {
+    background: #fdecea;
+    color: #b3261e;
+  }
+}
+
+.card-actions {
+  display: flex;
+  border-top: 1px solid #f0eee7;
+
+  button {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.6rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .edit-btn:hover {
+    background: #f4f1ea;
+  }
+
+  .delete-btn {
+    color: #b3261e;
+    border-left: 1px solid #f0eee7;
+
+    &:hover {
+      background: #fdecea;
+    }
+  }
+}
+
+// Add/Edit form panel
+.form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.form-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+
+  h2 {
+    font-size: 1.1rem;
+    margin: 0 0 0.25rem;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    color: #6b6b6b;
+  }
+
+  input,
+  textarea {
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid #e5e2db;
+    border-radius: 8px;
+    color: #1a1a1a;
+
+    &:focus {
+      outline: 2px solid #1a1a1a;
+      outline-offset: 1px;
+    }
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.cancel-btn {
+  background: none;
+  border: 1px solid #e5e2db;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:hover {
+    background: #f4f1ea;
+  }
+}

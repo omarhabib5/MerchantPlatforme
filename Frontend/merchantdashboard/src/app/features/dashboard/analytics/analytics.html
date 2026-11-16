@@ -1,0 +1,122 @@
+<div class="analytics-page">
+    <header class="analytics-header">
+        <div>
+            <h1>{{ language.t('analyticsTitle') }}</h1>
+            <p class="subtitle">{{ language.t('performance') }} {{ monthLabel(selectedMonth()) }}</p>
+        </div>
+    </header>
+
+    <nav class="month-selector" [attr.aria-label]="language.t('chooseAnalyticsMonth')">
+        <button type="button" [class.active]="selectedMonth() === currentMonth()"
+            [attr.aria-pressed]="selectedMonth() === currentMonth()" (click)="selectMonth(currentMonth())">
+            {{ language.t('currentMonth') }}
+        </button>
+        <button type="button" *ngFor="let month of availableMonths()" [class.active]="month === selectedMonth()"
+            [attr.aria-pressed]="month === selectedMonth()" (click)="selectMonth(month)">
+            {{ monthLabel(month) }}
+        </button>
+    </nav>
+
+    <section class="targets-panel" aria-labelledby="targets-title">
+        <div class="targets-heading">
+            <div>
+                <h2 id="targets-title">{{ language.t('goals') }} {{ monthLabel(selectedMonth()) }}</h2>
+                <p>{{ isHistoricalMonth() ? language.t('goalsReadOnly') : language.t('setGoals') }}</p>
+            </div>
+            <button class="save-targets" type="button" [disabled]="savingTargets() || isHistoricalMonth()"
+                (click)="saveTargets()">
+                {{ savingTargets() ? language.t('saving') : language.t('saveGoals') }}
+            </button>
+        </div>
+
+        <div class="target-inputs">
+            <label>
+                {{ language.t('netProfitThisMonth') }} (DT)
+                <input type="number" min="0" step="0.01" [value]="targets().profitGoal" [disabled]="isHistoricalMonth()"
+                    (input)="updateTarget($any($event.target).value)" />
+            </label>
+        </div>
+    </section>
+
+    <p class="error-banner" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+    <div class="loading-state" *ngIf="loading()">{{ language.t('loadingAnalytics') }}</div>
+
+    <ng-container *ngIf="!loading()">
+        <div class="metric-cards" *ngIf="summary() as s">
+            <div class="metric-card">
+                <span class="metric-label">{{ language.t('netProfitThisMonth') }}</span>
+                <span class="metric-value">{{ s.netProfit }} DT</span>
+            </div>
+
+            <div class="metric-card">
+                <span class="metric-label">{{ language.t('orders') }}</span>
+                <span class="metric-value">{{ s.totalOrders }}</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">{{ language.t('rejectionRate') }}</span>
+                <span class="metric-value" [class.warning]="s.rejectionRate > 15">{{ s.rejectionRate }}%</span>
+            </div>
+        </div>
+
+        <section class="progress-panel" *ngIf="summary() as s">
+            <div class="progress-heading">
+                <div>
+                    <h2 class="section-title">{{ language.t('progressToGoals') }}</h2>
+                    <p>{{ language.t('compareGoals') }} {{ monthLabel(selectedMonth()) }}.</p>
+                </div>
+                <button class="ai-button" type="button" [disabled]="loadingAdvice()" (click)="askForGoalAdvice()">
+                    {{ loadingAdvice() ? language.t('loadingAnalytics') : language.t('askAdvisor') }}
+                </button>
+            </div>
+
+            <div class="progress-list">
+                <div class="progress-row">
+                        <div><span>{{ language.t('netProfitThisMonth') }}</span><strong>{{ s.revenue }} / {{ targets().profitGoal
+                            }} DT</strong></div>
+                    <div class="progress-track"><span
+                            [style.width.%]="progress(s.revenue, targets().profitGoal)"></span></div>
+                        <small>{{ progress(s.revenue, targets().profitGoal) }}% · {{ language.t('remaining') }} {{
+                        remaining(s.revenue, targets().profitGoal) }} DT</small>
+                </div>
+            </div>
+
+            <div class="ai-advice" *ngIf="aiAdvice()">
+                <strong>{{ language.t('explainAdvisor') }}</strong>
+                <p>{{ aiAdvice() }}</p>
+            </div>
+        </section>
+
+        <h2 class="section-title">{{ language.t('ordersByProduct') }}</h2>
+
+        <div class="empty-state" *ngIf="productStats().length === 0">
+            <p>{{ language.t('noProductData') }}</p>
+            <span>{{ language.t('productDataHint') }}</span>
+        </div>
+
+        <div class="table-wrap" *ngIf="productStats().length > 0">
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>{{ language.t('product') }}</th>
+                        <th>{{ language.t('orders') }}</th>
+                        <th>{{ language.t('rejected') }}</th>
+                        <th>{{ language.t('rejectionRate') }}</th>
+                        <th>{{ language.t('revenue') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let stat of productStats()">
+                        <td>{{ stat.product.name || language.t('unknownProduct') }}</td>
+                        <td>{{ stat.orderCount }}</td>
+                        <td>{{ stat.rejectedCount }}</td>
+                        <td [class.warning-text]="rejectionRateFor(stat) > 15">
+                            {{ rejectionRateFor(stat) }}%
+                        </td>
+                        <td>{{ stat.revenue || 0 }} DT</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+</div>
